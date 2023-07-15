@@ -243,3 +243,6 @@ fabric.properties
 /atribution/Resultados/
 /atribution/tfg/punkt/
 /atribution/tmp/
+/scraper/json/
+/scraper/csv/
+/scraper/html/
