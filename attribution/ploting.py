@@ -330,9 +330,9 @@ def plot_all_together(data):
 
 
 if __name__ == "__main__":
+    find = {"tags": "tfg_ngrams_1000_git"}
     db = DataBase()
     collection = db.get_objects(collection="experiments")
-    find = {"tags": "tfg_ngrams_1000_git"}
     data_list = [e for e in collection.find(find)]
     print_all = False
     print("Iniciando...")

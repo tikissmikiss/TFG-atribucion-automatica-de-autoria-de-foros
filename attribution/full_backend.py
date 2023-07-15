@@ -312,7 +312,7 @@ def check_classifiers_list(classifiers_list):
 def session():
     results = dict()
     authors = 3
-    max_docs = 100
+    max_docs = 2000
     first = True
     for ngramas in [(1, 1)]: #, (1, 2), (1, 3), (1, 4)]:  #
         for min_words in range(0, 36, 5):

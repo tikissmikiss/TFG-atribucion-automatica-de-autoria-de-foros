@@ -30,7 +30,7 @@ def load_temp_dataset():
 
 
 class DataBase:
-    def __init__(self, uri="mongodb://localhost:27017/", db_name="tfg_database", collection="posts"):
+    def __init__(self, uri="mongodb://localhost:27017/", db_name="tfg_database", collection="anonymized_posts_100"):
         self.uri = uri
         self.db_name = db_name
         self.collection_name = collection
@@ -39,7 +39,7 @@ class DataBase:
         # Obtener los documentos de una colección específica
         self.db = self.client[self.db_name]
 
-    def get_dataframe(self, collection="posts", use_cache=False):
+    def get_dataframe(self, collection="anonymized_posts_100", use_cache=False):
         inicio = datetime.now()
         if use_cache:
             df = load_temp_dataset()
