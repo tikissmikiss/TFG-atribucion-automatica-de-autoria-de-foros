@@ -240,9 +240,11 @@ fabric.properties
 /**/**.dic
 /**/**.iml
 .idea/
-/atribution/Resultados/
-/atribution/tfg/punkt/
-/atribution/tmp/
+/attribution/Resultados/
+/attribution/tfg/punkt/
+/attribution/tmp/
 /scraper/json/
 /scraper/csv/
 /scraper/html/
+/**/**/tmp
+/attribution/tfg/tmp/
