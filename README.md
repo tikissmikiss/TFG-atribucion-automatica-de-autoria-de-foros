@@ -1,6 +1,11 @@
-# TFG - Atribución Automática de Autoría en foros
+
+# TFG - Atribución Automática de Autoría de foros
 
 Este es el repositorio de código correspondiente al Trabajo de Fin de Grado de Ingeniería Informática.
+
+
+![Escudo](https://img.shields.io/badge/status-in%20Development-red) ![Escudo](https://img.shields.io/github/languages/count/tikissmikiss/TFG-atribucion-automatica-de-autoria-de-foros) ![Escudo](https://img.shields.io/github/languages/top/tikissmikiss/TFG-atribucion-automatica-de-autoria-de-foros) <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">![Escudo](https://img.shields.io/badge/license-in%20CC%20BY--NC--SA%204.0-yellow)</a>
+
 
 ## Herramienta para la atribución automática de autoría
 
