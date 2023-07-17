@@ -5,10 +5,10 @@ Código relativo al trabajo de fin de estudios del grado de ingeniería informá
 [...]
 
 ## Herramienta para Atribución Automática de Autoría
-[...]
+[Ver notebook](./Atribucion%20Autoria%20Foros.ipynb)
 
-### Ejemplo de clasificación para 209 autores
-[<poner imagen>]
+### Ejemplo de clasificación para 100 autores
+[...]
 
 ## dataset
 Contiene el dataset utilizado para el entrenamiento y evaluación de los modelos. Se trata de un dataset de 905129 posts de foros de discusión, con al menos 100 posts de cada uno de los 1362 autores. Los posts se encuentran en formato JSON, con la siguiente estructura:
