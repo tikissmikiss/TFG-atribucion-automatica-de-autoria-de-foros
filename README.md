@@ -34,4 +34,5 @@ Disponible en formato [JSON](https://mega.nz/file/SY5HkDIa#q8njIJ-5ptDLFbDLJ0YRw
 
 ### Ejemplo de clasificación para 100 autores
 
-[...]
+![ejemplo matriz](./attribution/samples/230717212935_absolut_confusion_matrix.svg)
+
