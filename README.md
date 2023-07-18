@@ -56,20 +56,22 @@ en minería de texto, al cual denominaremos «_genérico_» (G). Por otro lado, 
 variante
 propuesta en este estudio, la cual nos referiremos como «_ad-hoc_» (A).
 
+### **Figura 1.**
 
- ### **Figura 1.**
 _Gráfico de accuracy por dataset para cada algoritmo de clasificación y tipo de limpieza_
 ![Figura 1](./attribution/samples/230716122622_graphs_ngram_my_tech.svg)
 
- ### **Tabla 1.** 
+### **Tabla 1.**
+
 _Comparativa accuracy por tipo de limpieza con **RidgeClassifier**_
 
-| min words: | 0      | 5      | 10     | 15     | 20     | 25     | 30     | 35     |
-|------------|--------|--------|--------|--------|--------|--------|--------|--------|
-| Genérico   | 49.0 % | 50.0 % | 54.6 % | 71.7 % | 74.4 % | 86.5 % | 86.9 % | 93.9 % |
-| ad-hoc     | 73.6 % | 76.0 % | 80.2 % | 84.2 % | 87.5 % | 96.2 % | 96.3 % | 98.7 % |
+| min words → | 0      | 5      | 10     | 15     | 20     | 25     | 30     | 35     |
+|-------------|--------|--------|--------|--------|--------|--------|--------|--------|
+| Genérico    | 49.0 % | 50.0 % | 54.6 % | 71.7 % | 74.4 % | 86.5 % | 86.9 % | 93.9 % |
+| ad-hoc      | 73.6 % | 76.0 % | 80.2 % | 84.2 % | 87.5 % | 96.2 % | 96.3 % | 98.7 % |
 
- ### **Tabla 2.** 
+### **Tabla 2.**
+
 _Comparativa accuracy por tipo de limpieza con **SVMClassifier**_
 
 | min words → | 0      | 5      | 10     | 15     | 20     | 25     | 30     | 35     |
@@ -77,7 +79,8 @@ _Comparativa accuracy por tipo de limpieza con **SVMClassifier**_
 | Genérico    | 49.0 % | 50.3 % | 55.6 % | 73.1 % | 74.8 % | 84.5 % | 86.0 % | 92.9 % |
 | ad-hoc      | 73.4 % | 76.2 % | 77.8 % | 84.3 % | 87.3 % | 95.5 % | 95.8 % | 98.1 % |
 
- ### **Tabla 3.** 
+### **Tabla 3.**
+
 _Comparativa accuracy por tipo de limpieza con **MLPClassifier**_
 
 | min words → | 0      | 5      | 10     | 15     | 20     | 25     | 30     | 35     |
@@ -85,7 +88,8 @@ _Comparativa accuracy por tipo de limpieza con **MLPClassifier**_
 | Genérico    | 46.0 % | 47.5 % | 52.7 % | 70.7 % | 74.0 % | 87.0 % | 87.5 % | 95.0 % |
 | ad-hoc      | 70.3 % | 72.1 % | 76.2 % | 83.7 % | 85.5 % | 96.7 % | 97.2 % | 98.7 % |
 
- ### **Tabla 4.** 
+### **Tabla 4.**
+
 _Comparativa accuracy por tipo de limpieza con **RandomForestClassifier**_
 
 | min words → | 0      | 5      | 10     | 15     | 20     | 25     | 30     | 35     |
@@ -93,8 +97,8 @@ _Comparativa accuracy por tipo de limpieza con **RandomForestClassifier**_
 | Genérico    | 45.7 % | 49.3 % | 51.4 % | 66.0 % | 67.6 % | 74.6 % | 75.6 % | 88.3 % |
 | ad-hoc      | 69.1 % | 71.7 % | 73.6 % | 79.9 % | 83.1 % | 93.1 % | 93.5 % | 97.5 % |
 
+### **Tabla 5.**
 
- ### **Tabla 5.** 
 _Comparativa accuracy promedios por dataset_
 
 | min words →    | 0      | 5      | 10     | 15     | 20     | 25     | 30     | 35     |
@@ -103,15 +107,16 @@ _Comparativa accuracy promedios por dataset_
 | media ad-hoc   | 59.5 % | 61.6 % | 65.2 % | 76.7 % | 79.2 % | 89.2 % | 89.8 % | 95.3 % |
 | Media total    | 59.5 % | 61.6 % | 65.2 % | 76.7 % | 79.2 % | 89.2 % | 89.8 % | 95.3 % |
 
- ### **Tabla 6.** 
+### **Tabla 6.**
+
 _Comparativa accuracy promedios totales_
 
 | Genérico | Ad-hoc | Total |
 |----------|--------|-------|
 | 0.691    | 0.851  | 0.771 |
 
-
 # Ejemplos de clasificación obtenidos con la herramienta
+
 ### Ejemplo de clasificación para 100 autores
 
 ![ejemplo matriz](./attribution/samples/230717212935_absolut_confusion_matrix.svg)
