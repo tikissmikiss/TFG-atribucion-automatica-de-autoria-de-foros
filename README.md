@@ -69,10 +69,9 @@ Cada instancia tiene la siguiente estructura:
 }
 ```
 
-Disponible en formato [JSON](https://mega.nz/file/SY5HkDIa#q8njIJ-5ptDLFbDLJ0YRwvVLZ3p5LigvGGxe2CD4ook)
-y [BSON](https://mega.nz/folder/mJxlXLjS#lcTOFd35EK5rnnYFIPxiXg)
-([.bson](https://mega.nz/file/GdpHQQgA#jcI0JpkRntCF4RQAfEuk_XG_IeNUGQ4P_xp-7ZlTTrk),
-[metadata](https://mega.nz/file/7EY2DQiZ#8E3Q584E1tm-loaY5rrr_XWDeM5P0DhzEjTTLwyZYG8)).
+Disponible en formato [JSON](https://mega.nz/file/fAY1jaAB#LojRhr4OXDwDbCnLXC5lFzCkJX2Ne1UOfMhKIX8i0S8)
+y [BSON](https://mega.nz/file/nFQmgBSB#BmhLOK1kN4Ybxyf2uG1zUfOOZajtBMIvizV-Bn5Zzrg)
+
 
 ## Resultado
 
