@@ -31,5 +31,6 @@ def create_folder(carpeta):
     if len(carpeta) > 0 and not os.path.exists(carpeta):
         carpeta = os.path.abspath(carpeta)
         os.makedirs(carpeta)
+        carpeta = '**********'
         print(f"Creada carpeta {carpeta}\n")
     return carpeta

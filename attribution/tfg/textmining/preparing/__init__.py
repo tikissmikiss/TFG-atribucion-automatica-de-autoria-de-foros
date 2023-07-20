@@ -50,13 +50,15 @@ repeated_chars_regex = re.compile(r'(?P<chars>(?P<char>[A-Za-z])\2+)(?P<suffix>\
 repeated_chars_regex_3 = re.compile(r'(?P<chars>(?P<char>[A-Za-z])\2\2+)(?P<suffix>\S*)', flags=re.IGNORECASE)
 
 
+def __ini__() -> None:
+    pass
+
 
 #
 # repeated_chars_regex = re.compile(r'(?P<chars>(?P<prefix>\w)(?!(?P<no>\w))(?P<char>\w)\2+)(?P<suffix>\S*)', flags=re.IGNORECASE)
 # repeated_chars_regex_3 = re.compile(r'(?P<chars>(?P<char>\w)\2\2+)(?P<suffix>\S*)', flags=re.IGNORECASE)
 #
 # repeated_chars_regex = re.compile(r'(?P<prefix>\w)(?!(?P<no>\w))(?P<chars>\w\2+)(?P<suffix>\S*)', flags=re.IGNORECASE)
-
 
 
 ruta_fichero_spanish_words = "spanish_words.dic"
@@ -659,7 +661,9 @@ def _balance_subset(X, y, class_label, target, balance_to_target, data_statistic
                     verbose, title, dict_key, balance_passive):
     to_balance = pd.concat([X, y], axis='columns')
     balanced_train_data = balance_class(to_balance, class_label=class_label, random_state=random_state,
-                                        n_samples=_n_samples(to_balance, balance_to_target=balance_to_target, class_label=class_label, target=target, balance_passive=balance_passive))
+                                        n_samples=_n_samples(to_balance, balance_to_target=balance_to_target,
+                                                             class_label=class_label, target=target,
+                                                             balance_passive=balance_passive))
     train_data_balanced_stats = show_statistics(
         balanced_train_data, title=title, author_label=class_label) if verbose else statistics(X)
     data_statistics.update({dict_key: train_data_balanced_stats})

@@ -1,4 +1,4 @@
-# from tfg.datos import DataBase, load_temp_dataset, save_temp_dataset, anonymize_specific_authors
+# from tfg.datos import DataBase, load_temp_dataset, save_cache, anonymize_specific_authors
 # import multiprocessing
 # import threading
 #
@@ -95,7 +95,7 @@
 #     df_all = load_temp_dataset()
 # elif origen_datos == "mongo":
 #     df_all = DataBase().get_dataframe()
-#     save_temp_dataset(df_all)
+#     save_cache(df_all)
 # else:
 #     raise ValueError("El parámetro origen_datos debe ser 'local' o 'mongo'")
 # df_all.info()

@@ -1,8 +1,12 @@
+import os
+from datetime import datetime
+
 import numpy as np
 from matplotlib import pyplot as plt
 from sklearn.metrics import ConfusionMatrixDisplay
 
-from tfg.utils import create_folder
+from attribution.tfg.utils import create_folder
+from tfg.utils import get_full_path, create_folder
 
 
 def _plot_histogram(df, title=None, num_bars=25):
@@ -89,8 +93,65 @@ def plot_histogram_(df, title=None):
     plt.show()
 
 
+def plot_author_frequencies(dataframe, column_name, bin_size=200, max_value=50):
+    # Contar las ocurrencias de cada autor
+    author_counts = dataframe['author'].value_counts()
+
+    # Obtener los nombres de los autores y las frecuencias
+    authors = author_counts.index
+    frequencies = author_counts.values
+
+    # Calcular los límites del rango
+    min_value = max(0, min(frequencies))
+    max_value = max(frequencies) if max_value is None else max_value
+    bin_size = 1
+    bin_range = range(min_value, max_value + bin_size, bin_size)
+
+    # Establecer el tamaño de la figura
+    plt.figure(figsize=(8, 3.7))  # Ajusta el ancho y alto según tus preferencias
+
+    # Trazar el histograma con barras para rangos de 200
+    plt.hist(frequencies, bins=bin_range, edgecolor='black')
+
+    # plt.tight_layout()
+    # Personalizar el gráfico
+    plt.title("Frecuencias de Autores")
+    plt.xlabel("Frecuencia")
+    plt.ylabel("Cantidad de Autores")
+    _save_plot('Frecuencias de Autores', '/resultados/graphics', format='svg', dpi=1200)
+
+    # Mostrar el gráfico
+    plt.show()
+
+
+def plot_words_frequencies(dataframe, column_name, bin_size=200, max_value=150):
+    word_counts = dataframe[column_name].apply(lambda x: len(str(x).split()))
+    frequencies = word_counts.values
+    # Calcular los límites del rango
+    min_value = max(0, min(frequencies))
+    max_value = max(frequencies) if max_value is None else max_value
+    bin_size = 3
+    bin_range = range(min_value, max_value + bin_size, bin_size)
+
+    # Establecer el tamaño de la figura
+    plt.figure(figsize=(8, 3.85))  # Ajusta el ancho y alto según tus preferencias
+
+    # Trazar el histograma con barras para rangos de 200
+    plt.hist(frequencies, bins=bin_range, edgecolor='black')
+
+    # plt.tight_layout()
+    # Personalizar el gráfico
+    plt.title("Frecuencias documentos según cantidad palabras")
+    plt.xlabel("Frecuencia en rango de palabras")
+    plt.ylabel("Cantidad de documentos")
+    _save_plot('Frecuencias de palabras', '/resultados/graphics', format='svg', dpi=1200)
+
+    # Mostrar el gráfico
+    plt.show()
+
+
 def plot_histogram(df, title=None, num_bars=None, fig_size=(12, 6), font_size=12, x_label=None, y_label=None,
-                   rotation=60, no_labels=False, range=None, folder="Resultados/graphics", show=True):
+                   rotation=60, no_labels=False, range=None, folder="resultados/graphics", show=True):
     if num_bars in ['auto', 'fd', 'doane', 'scott', 'stone', 'rice', 'sturges', 'sqrt']:
         num_bars = num_bars
     elif num_bars == 'all':
@@ -153,7 +214,25 @@ def plot_histogram(df, title=None, num_bars=None, fig_size=(12, 6), font_size=12
     plt.close()
 
 
-def plot_pie(df, lengths, style_label='default', folder="Resultados/graphics", show=True):
+def plot_pie2(dataframe):
+    # Contar las ocurrencias de cada autor
+    author_counts = dataframe['author'].value_counts()
+
+    # Obtener los nombres de los autores y las frecuencias
+    authors = author_counts.index
+    frequencies = author_counts.values
+
+    # Trazar el gráfico de pastel
+    plt.pie(frequencies, labels=authors, autopct='%1.1f%%')
+
+    # Personalizar el gráfico
+    plt.title("Frecuencias de Autores")
+
+    # Mostrar el gráfico
+    plt.show()
+
+
+def plot_pie(df, lengths, style_label='default', folder="resultados/graphics", show=True):
     # make figure and assign axis objects
     fig, ax1 = plt.subplots(figsize=(6, 4))
     plt.style.use(style_label)
@@ -187,6 +266,8 @@ def plot_pie(df, lengths, style_label='default', folder="Resultados/graphics", s
     title = "Documentos por número de palabras"
     ax1.set_title(title, fontsize=12, fontweight='bold')
 
+    _save_plot(title, f'{folder}', format='svg', dpi=1200)
+
     plt.tight_layout()
     create_folder(folder)
     # guardar svg
@@ -195,33 +276,192 @@ def plot_pie(df, lengths, style_label='default', folder="Resultados/graphics", s
         plt.show()
     plt.close()
 
-    # plt.savefig(f'./Resultados/graphics/pie.svg', format='svg', dpi=1200)
+    # plt.savefig(f'./resultados/graphics/pie.svg', format='svg', dpi=1200)
     # plt.show()
 
 
-def generar_matriz_confusion(clf, y_test, prediction, target_names, folder, show=False):
+def generar_matriz_confusion(clf, y_test, prediction, target_names, folder, show=True, save=True):
     create_folder(folder)
-    scale = len(target_names)/15+1/6
+    scale = (len(target_names)/15+1/6)
     # _, ax = plt.subplots(figsize=(20 * scale / 2.4, 20 * scale / 2.4))
-    _, ax = plt.subplots(figsize=(20*scale, 12*scale))
+    _, ax = plt.subplots(figsize=(15*scale*0.55, 15*scale*0.55))
     ConfusionMatrixDisplay.from_predictions(y_test, prediction, ax=ax)
     ax.xaxis.set_ticklabels(target_names)
     ax.yaxis.set_ticklabels(target_names)
     _ = ax.set_title(f"{clf.__class__.__name__}\non test set")
-    print("ATENCION NO SE GUARDA LA MATRIZ DE CONFUSION")
-    # plt.savefig(f'{folder}/absolut_confusion_matrix.svg', format='svg', dpi=1200)
+    plt.tight_layout()
+    if save:
+        _save_plot('absolut_confusion_matrix', folder, format='svg', dpi=10)
+        # plt.savefig(f'{folder}/absolut_confusion_matrix.svg', format='svg', dpi=1200)
+    else:
+        print("ATENCION NO SE GUARDA LA MATRIZ DE CONFUSION")
     if show:
         plt.show()
     plt.close()
     #
-    _, ax = plt.subplots(figsize=(20*scale, 12*scale))
+    _, ax = plt.subplots(figsize=(15*scale*0.65, 15*scale*0.65))
     ConfusionMatrixDisplay.from_predictions(y_test, prediction, ax=ax, normalize='pred')
     ax.xaxis.set_ticklabels(target_names)
     ax.yaxis.set_ticklabels(target_names)
     _ = ax.set_title(f"Conf. Matrix for {clf.__class__.__name__}\non TEST documents")
-    # guardar svg
-    print("ATENCION NO SE GUARDA LA MATRIZ DE CONFUSION")
-    # plt.savefig(f'{folder}/normalized_confusion_matrix.svg', format='svg', dpi=1200)
+    plt.tight_layout()
+    if save:
+        _save_plot('normalized_confusion_matrix', folder, format='svg', dpi=10)
+        # plt.savefig(f'{folder}/normalized_confusion_matrix.svg', format='svg', dpi=1200)
+    else:
+        print("ATENCION NO SE GUARDA LA MATRIZ DE CONFUSION")
     if show:
         plt.show()
     plt.close()
+
+
+def plot_graphs_ngram__min_word__my_tech(data):
+    """
+    Gráfica la precisión de los modelos en función de 'min_words' para cada valor de 'my_tech' y 'ngram_range'
+    Una gráfica por cada rango de ngramas
+    """
+    num_models = len(data[0]['models'])
+    if num_models > 6:
+        mid_idx = num_models // 2
+        data1 = [{**d, 'models': d['models'][:mid_idx]} for d in data]
+        data2 = [{**d, 'models': d['models'][mid_idx:]} for d in data]
+        plot_graphs_ngram__min_word__my_tech(data1)
+        plot_graphs_ngram__min_word__my_tech(data2)
+    else:
+        authors = data[0]['params']['n_authors']
+        docs = data[0]['selected_documents_statistics']['Número de documentos']
+        # Agrupa los datos por 'ngram_range'
+        data_by_ngram = {}
+        for d in data:
+            ngram = tuple(d['params']['ngram_range'])
+            if ngram not in data_by_ngram:
+                data_by_ngram[ngram] = [d]
+            else:
+                data_by_ngram[ngram].append(d)
+
+        # Por cada valor de 'ngram_range', separa los datos en dos listas dependiendo del valor de 'my_tech'
+        data_by_ngram_and_tech = {ngram: {'true': [], 'false': []} for ngram in data_by_ngram.keys()}
+        for ngram, data in data_by_ngram.items():
+            data_by_ngram_and_tech[ngram]['true'] = sorted(
+                [d for d in data if d['params']['my_tech']], key=lambda x: x['params']['min_words'])
+            data_by_ngram_and_tech[ngram]['false'] = sorted(
+                [d for d in data if not d['params']['my_tech']], key=lambda x: x['params']['min_words'])
+
+        # Define el conjunto de colores para cada modelo (suponiendo que hay no más de 10 modelos)
+        colors = ['b', 'g', 'r', 'c', 'm', 'y', 'k', 'orange', 'purple', 'brown']
+
+        # Inicializa la figura
+        scale = 0.8
+        _ = plt.figure(figsize=(scale * 10, scale * 6 * len(data_by_ngram_and_tech)))
+
+        # Por cada valor de 'ngram_range', grafica los datos en su propio subplot
+        lines_true = {}
+        lines_false = {}
+        for i, (ngram, _data) in enumerate(data_by_ngram_and_tech.items()):
+            plt.subplot(len(data_by_ngram_and_tech), 1, i + 1)
+            for d in ['true', 'false']:
+
+                for m, model in enumerate(_data['true'][0]['models']):
+                    name = model.get("name")
+                    name = name.replace('RidgeClassifier', 'RC').replace('SVC', 'SVM') \
+                        .replace('MLPClassifier', 'MLP').replace('RandomForestClassifier', 'RFC')
+
+                    x = [d['params']['min_words'] for d in _data[d]]
+                    y = [d['models'][m]['accuracy'] for d in _data[d]]
+                    plt.plot(x, y, marker='.', color=colors[m], linestyle='-' if d == 'true' else '--',
+                             label=f"ad-hoc ({name})" if d == 'true' else f"generic ({name})")
+
+
+        #         lines_true.update({m: {'x': [d['params']['min_words'] for d in _data['true']],
+        #                                'y': [d['models'][m]['accuracy'] for d in _data['true']],
+        #                                'n': name, 'c': colors[m]}})
+        #         lines_false.update({'x': [d['params']['min_words'] for d in _data['false']],
+        #                             'y': [d['models'][m]['accuracy'] for d in _data['false']],
+        #                             'n': name, 'c': colors[m]})
+        #
+        # for e in lines_true.items():
+        #     x, y, name, c = e[1]['x'], e[1]['y'], e[1]['n'], e[1]['c']
+        #     # Grafica para 'my_tech' = True
+        #     plt.plot(x, y, marker='.', color=colors[c], linestyle='-',
+        #              label=f"ad-hoc ({name})", )
+        #
+        # for e in lines_false:
+        #     x, y, name, c = e
+        #     # Grafica para 'my_tech' = False
+        #     plt.plot(x, y, marker='.', color=colors[c], linestyle='--',
+        #              label=f"genérica ({name})", )
+
+        # Configura el subplot
+        plt.title(f'Resultados experimentos [authors: {authors}, docs: {docs}]')
+        plt.xlabel('Min words')
+        plt.ylabel('Accuracy')
+        plt.legend(
+            title='Limpieza (Algoritmo)')  # fancybox=True, shadow=True, bbox_to_anchor=(1.00, 1), loc='upper left'
+
+        plot_and_show('graphs_ngram_my_tech', format='svg', dpi=1200, tight_layout=True)
+
+
+def _save_plot(file, folder, format='svg', dpi=1200):
+    folder = folder.removeprefix('./').removeprefix('/').removeprefix('\\').removesuffix('./').removesuffix(
+        '/').removesuffix('\\')
+    path = get_full_path(f"{file}.{format}", folder)
+    # Crear la carpeta si no existe
+    create_folder(folder)
+    now = ''
+    # Comprobar si existe el fichero
+    if os.path.isfile(path):
+        # Sí existe, añadir YYMMDDHHMMSS delante del nombre
+        now = datetime.now().strftime("%y%m%d%H%M%S") + '_'
+    plt.savefig(f'{folder}/{now}{file}.{format}', format=format, dpi=dpi)
+
+
+def plot_and_show(filename, folder='./resultados', format='svg', dpi=1200, show=True, close=True, tight_layout=True):
+    # Muestra el gráfico
+    if tight_layout:
+        plt.tight_layout()
+    if format == 'all':
+        _save_plot(filename, f'{folder}/graphics', format='svg', dpi=dpi)
+        _save_plot(filename, f'{folder}/graphics', format='png', dpi=dpi)
+    else:
+        _save_plot(filename, f'{folder}/graphics', format=format, dpi=dpi)
+    if show:
+        plt.show()
+    if close:
+        plt.close()
+
+
+def plot_all_together(data):
+    """
+    Gráfica la precisión de los modelos en función de 'min_words' para cada valor de 'my_tech'
+    Todas las gráficas en la misma figura
+    """
+    # Primero, separa los datos en dos listas diferentes dependiendo del valor de 'my_tech'
+    data_true = [d for d in data if d['params']['my_tech'] == True]
+    data_false = [d for d in data if d['params']['my_tech'] == False]
+
+    # Ordena los datos por 'min_words' para asegurar que las líneas de los gráficos sean coherentes
+    data_true = sorted(data_true, key=lambda x: x['params']['min_words'])
+    data_false = sorted(data_false, key=lambda x: x['params']['min_words'])
+
+    # Inicializa la figura y los ejes
+    _, axs = plt.subplots(figsize=(10, 10))
+
+    # Para cada modelo, grafica los datos en el gráfico para 'my_tech' = True
+    for i, model in enumerate(data_true[0]['models']):
+        x = [d['params']['min_words'] for d in data_true]
+        y = [d['models'][i]['accuracy'] for d in data_true]
+        axs.plot(x, y, label=f"{model.get('name')} (my_tech=True)")
+
+    # Repite para 'my_tech' = False
+    for i, model in enumerate(data_true[0]['models']):
+        x = [d['params']['min_words'] for d in data_false]
+        y = [d['models'][i]['accuracy'] for d in data_false]
+        axs.plot(x, y, linestyle='--', label=f"{model.get('name')} (my_tech=False)")
+
+    # Configura el gráfico
+    axs.set_title('Model Accuracy')
+    axs.set_xlabel('min_words')
+    axs.set_ylabel('accuracy')
+    axs.legend()
+
+    plot_and_show('plot_all_together', format='svg', dpi=1200)  # Muestra el gráfico  # plt.show()

@@ -1,4 +1,4 @@
-package com.tikiss.scraping;
+package com.tikiss.scraping.entity;
 
 import lombok.Data;
 

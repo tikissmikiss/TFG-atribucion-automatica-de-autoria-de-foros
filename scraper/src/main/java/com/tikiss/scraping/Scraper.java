@@ -7,18 +7,19 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.tikiss.scraping.entity.Cita;
+import com.tikiss.scraping.entity.Post;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -42,7 +43,7 @@ public class Scraper implements Runnable {
 
     private String fullUrl;
     private String nameHilo = null;
-    private List<Post> listPosts = new ArrayList<>();
+    private final List<Post> listPosts = new ArrayList<>();
     private int iniPag = 1;
     private int endPag = 1;
     private int idThread;
@@ -182,13 +183,13 @@ public class Scraper implements Runnable {
     }
 
     private String buildFullUrl(int idThread, int pag) {
-        return new StringBuilder(urlBase)
-                .append("?")
-                .append("t=")
-                .append(idThread)
-                .append("&")
-                .append("page=")
-                .append(pag).toString();
+        return urlBase +
+                "?" +
+                "t=" +
+                idThread +
+                "&" +
+                "page=" +
+                pag;
     }
 
     private int getNumPags(Document doc) {
@@ -317,7 +318,7 @@ public class Scraper implements Runnable {
         System.out.println("######################### text #########################");
         System.out.println(element.text());
         System.out.println("######################### toString #########################");
-        System.out.println(element.toString());
+        System.out.println(element);
         System.out.println("######################### data #########################");
         System.out.println(element.data());
         System.out.println("######################### outerHtml #########################");
@@ -416,10 +417,10 @@ public class Scraper implements Runnable {
         try {
             // printWriter = new PrintWriter(filePath, StandardCharsets.UTF_8);
             // printWriter = new PrintWriter(filePath);
-            printWriter = new PrintWriter(filePath, "utf-8");
+            printWriter = new PrintWriter(filePath, StandardCharsets.UTF_8);
         } catch (FileNotFoundException e) {
             System.out.println("Unable to locate the fileName: " + e.getMessage());
-        } catch (UnsupportedEncodingException e) {
+        } catch (IOException e) {
             System.out.println("Charset no soportado");
             e.printStackTrace();
         }

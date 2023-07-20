@@ -1,9 +1,9 @@
 import array
 from typing import Dict
 
-from tfg.datos import DataBase, load_temp_dataset, save_temp_dataset, anonymize_authors, get_experiment_id
-from tfg.textmining.preparing import clean_corpus, process_dataset
-from tfg.textmining.preprocessing import eliminar_columnas, select_documents, show_statistics
+from tfg.datos import *
+from tfg.textmining.preparing import *
+from tfg.textmining.preprocessing import *
 
 
 # pip install --upgrade pip
@@ -29,14 +29,14 @@ def experimento(  # ## PARÁMETROS CONFIGURACIÓN EXPERIMENTO
         # Manipulación de los datos
         ###############################################################################
         # "local" o "mongo" - Si "local" se cargará el dataset desde el disco. Si "mongo" se cargará desde la base de datos.
-        origen_datos="local",
+        origen_datos=Origin.MONGO,
         # Si True, se guardará el dataset preprocesado en el disco.
         save_preprocessed_temp=False,
         # Anonimización de los datos - Si True, se guardará el dataset anonimizado en la base de datos
         # Si False, se anonimizarán los datos pero no se guardarán en la base de datos
         anonymize_and_save=False,
         # Nombre de la colección en la que se guardarán los datos anonimizados
-        collection="anonymized_posts_100",  # Nombre de la colección del data set
+        collection="anonymized_posts",  # Nombre de la colección del data set
         ###############################################################################
         # Preprocesamiento de los datos
         ###############################################################################
@@ -126,6 +126,7 @@ def experimento(  # ## PARÁMETROS CONFIGURACIÓN EXPERIMENTO
 
     # Guardar parámetros de configuración en un diccionario
     params = locals().copy()
+    params['origen_datos'] = params['origen_datos'].value
     metadata = dict(_id=get_experiment_id())
     metadata.update(params=params)
     metadata["description"] = metadata["params"].pop("description")
@@ -137,9 +138,9 @@ def experimento(  # ## PARÁMETROS CONFIGURACIÓN EXPERIMENTO
 
     # ### Fase de recolección de datos
 
-    if origen_datos == "local":
-        df_all = load_temp_dataset()
-    elif origen_datos == "mongo":
+    if origen_datos == Origin.CACHE:
+        df_all = load_cache(CacheMode.ALL)
+    elif origen_datos == Origin.MONGO:
         df_all = db.get_dataframe(collection=collection, use_cache=use_cache)
         # save_temp_dataset(df_all)
     else:
@@ -313,22 +314,29 @@ def session():
     results = dict()
     authors = 3
     max_docs = 100
+    min_words = 0
     first = True
-    for ngramas in [(1, 1)]: #, (1, 2), (1, 3), (1, 4)]:  #
-        for min_words in range(0, 36, 5):
-            for my_tech in [True, False]:  #
-            # for authors in range(2, 41):
+    ngramas = (1, 1)
+    for my_tech in [True, False]:  #
+        import winsound
+        # Reproducir un pitido corto
+        winsound.Beep(440, 200)  # Frecuencia: 440Hz, Duración: 200 milisegundos
+        for max_docs in [100, 200, 300]: #, (1, 2), (1, 3), (1, 4)]:  #
+            for max_words in range(0, 501, 100):
                 result = experimento(
                     description=f"{authors} autores - {min_words} palabras mínimas - "
+                                f"{max_words} palabras máximas - "
                                 f"{max_docs} documentos máximos por autor - "
                                 f"n-gramas hasta {ngramas[1]} - "
                                 f"myTech-{my_tech}",
-                    origen_datos="mongo",  # if first else "local",
+                    origen_datos=Origin.MONGO if first else Origin.CACHE,
                     use_cache=not first,
                     n_authors=authors,
                     min_words=min_words,
+                    max_words=max_words,
                     max_doc_per_author=max_docs,
                     longest_docs=False,
+                    test_size=0.5,
                     my_tech=my_tech,
                     ngram_range=ngramas,
                     classifiers_list=[
@@ -337,9 +345,10 @@ def session():
                         # 'LinearSVC',
                         # 'NearestCentroid',
                         'MLPClassifier',
-                        'RandomForestClassifier',
+                        # 'RandomForestClassifier',
                     ],
-                    tags="tfg_ngrams_1000_git"
+                    tags="maxwords_x_100_200_300_docs",
+                    verbose=True
                 )
                 first = False
                 _id = result.get("_id")

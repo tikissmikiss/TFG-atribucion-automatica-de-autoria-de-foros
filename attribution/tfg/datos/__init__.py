@@ -3,6 +3,7 @@ import pickle
 import re
 import threading
 from datetime import datetime
+from enum import Enum
 
 import pandas as pd
 from numpy import ndarray
@@ -12,25 +13,22 @@ from pymongo import MongoClient
 from tfg.utils import guardar_objeto, cargar_objeto, create_folder
 
 
-def save_temp_dataset(df):
-    inicio = datetime.now()
-    guardar_objeto(df, "temp_dataset.pkl", carpeta="tmp")
-    fin = datetime.now()
-    # imprimir tiempo con dos decimales
-    print(f"Tiempo de guardado: {(fin - inicio).total_seconds():.3f}\n")
+class CacheMode(Enum):
+    NONE = 0
+    ALL = 1
+    FILTERED = 2
+    ANONYMIZED = 3
+    CLEANED = 4
+    PROCESSED = 5
 
 
-def load_temp_dataset():
-    inicio = datetime.now()
-    print("Cargando datos desde el disco...")
-    objeto = cargar_objeto("tmp/temp_dataset.pkl")
-    fin = datetime.now()
-    print(f"Tiempo de carga: {(fin - inicio).total_seconds():.3f}\n")
-    return objeto
+class Origin(Enum):
+    MONGO = 'MONGO'
+    CACHE = 'CACHE'
 
 
 class DataBase:
-    def __init__(self, uri="mongodb://localhost:27017/", db_name="tfg_database", collection="posts"):
+    def __init__(self, uri="mongodb://localhost:27017/", db_name="tfg_database", collection="anonymized_posts"):
         self.uri = uri
         self.db_name = db_name
         self.collection_name = collection
@@ -39,10 +37,10 @@ class DataBase:
         # Obtener los documentos de una colección específica
         self.db = self.client[self.db_name]
 
-    def get_dataframe(self, collection="posts", use_cache=False):
+    def get_dataframe(self, collection="anonymized_posts", use_cache=False):
         inicio = datetime.now()
         if use_cache:
-            df = load_temp_dataset()
+            df = load_cache(CacheMode.ALL)
             if df is not None:
                 return df
         self.collection_name = collection
@@ -52,7 +50,7 @@ class DataBase:
         df = pd.DataFrame(list(docs))
         df = df.rename({"contenido": "text", "hilo": "thread", "nombreUsuario": "author"}, axis='columns')
         # df = anonymize_authors(df)
-        save_temp_dataset(df)
+        save_cache(df, CacheMode.ALL)
         fin = datetime.now()
         print(f"Recuperados {len(df)} documentos de la colección {self.collection_name} en {(fin - inicio).total_seconds():.3f} segundos.\n")
         return df
@@ -113,6 +111,35 @@ class DataBase:
         return self.db[collection].insert_one(experiment)
 
 
+def _cache_file(cache_mode):
+    file = "all_dataset.pkl" if cache_mode == CacheMode.ALL else "dataset.pkl"
+    file = "cleaned_dataset.pkl" if cache_mode == CacheMode.CLEANED else file
+    file = "filtered_dataset.pkl" if cache_mode == CacheMode.FILTERED else file
+    file = "anonymized_dataset.pkl" if cache_mode == CacheMode.ANONYMIZED else file
+    file = "processed_dataset.pkl" if cache_mode == CacheMode.PROCESSED else file
+    return file
+
+
+def save_cache(df, cache_mode: CacheMode):
+    inicio = datetime.now()
+    print("Guardando datos en el disco...")
+    file = _cache_file(cache_mode)
+    guardar_objeto(df, file, carpeta="tmp")
+    fin = datetime.now()
+    # imprimir tiempo con dos decimales
+    print(f"Tiempo de guardado: {(fin - inicio).total_seconds():.3f} - [{file}]\n")
+
+
+def load_cache(cache_mode):
+    inicio = datetime.now()
+    print("Cargando datos desde el disco...")
+    file = _cache_file(cache_mode)
+    objeto = cargar_objeto(f"tmp/{file}")
+    fin = datetime.now()
+    print(f"Tiempo de carga: {(fin - inicio).total_seconds():.3f} - [{file}]\n")
+    return objeto
+
+
 def test():
     mdb = DataBase("mongodb://localhost:27017", "test", "test")
     dic = cargar_objeto("spanish_words.dic")
@@ -167,9 +194,12 @@ def anonymize_authors(datos: DataFrame,
         print(f"Changing author {auth} to {prefix + str(i)}")
         # definir regex que busque y sustituya todas las coincidencias con el nombre insensible a mayúsculas o minúsculas
         df[doc] = df[doc].apply(lambda x, j=i, a=auth, p=prefix: re.sub(r'(?i)\b' + a + r'\b', p + str(j), x))
-        df[cls] = df[cls].apply(lambda x, j=i, a=auth, p=prefix: x.replace(a, p + str(j)))
+        df[cls] = df[cls].apply(lambda x, j=i, a=auth, p=prefix: x.replace(a, p + str(j)) if a == x else x)
+        # df[cls] = df[cls].apply(lambda x, j=i, a=auth, p=prefix: x.replace(a, p + str(j)))
         if (i+1) % 25 == 0:
             print(f"Authors to anonymize: {len(authors) - i} of {len(authors)}")
+    # Ordenar por nombre de autor
+    # df = df.sort_values(by=[cls])
 
     if seleccionar_para_grafica:
         # Dejar solo 10 archivos del autor 0 y 90 del resto

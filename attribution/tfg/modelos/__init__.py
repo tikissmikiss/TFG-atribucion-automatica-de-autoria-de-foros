@@ -408,7 +408,7 @@ def _save_experiment(clf, accuracy, duration, x_train, y_train, x_test, y_test,
         y_test)
     target_names = clf.classes_
     # name = f"{len(target_names)} authors - {len(y_train)+len(y_test)} documents"
-    # folder = f"Resultados/{datetime.now().strftime('%Y-%m-%d')}/{name}/{datetime.now().strftime('%H%M%S')}" \
+    # folder = f"resultados/{datetime.now().strftime('%Y-%m-%d')}/{name}/{datetime.now().strftime('%H%M%S')}" \
     #          f" - {clf.__class__.__name__} - accuracy {accuracy:.3f}" \
     #          f" - duration {duration:.3f}" \
     #          f" - balanced {metadata.get('metadata_process_dataset').get('balance')}"\

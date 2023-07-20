@@ -17,6 +17,48 @@ publicaciones de 10 autores diferentes.
 Dentro de la carpeta [scraper](./scraper) se encuentra la implementación del web scraper utilizado para la construcción
 del dataset.
 
+### Uso
+
+Para ejecutar el scraper es necesario tener instalado Java 8 o superior y ejecutar el siguiente comando:
+
+```shell
+> java -jar web-scraper-0.1.0.jar --help
+
+Uso: java -jar web-scraper-0.1.0.jar [opciones]
+
+ -ap,--atrpage <arg>    Atributo de página de la url. p. e. page='pag' en
+                        https://foro.com/showthread.php?t=9077911&pag=1
+ -d,--directory <arg>   Directorio de salida
+ -eh,--endHilo <arg>    Hilo del foro final. Valor final del atributo de
+                        la url. p.e. t=90.
+ -ep,--endpage <arg>    Página final. Valor final del atributo de la url.
+ -f,--file <arg>        Nombre del archivo de salida
+ -h,--help              Mostrar ayuda
+ -ih,--iniHilo <arg>    Hilo del foro de inicio. Valor inicial del
+                        atributo de la url. p.e. t=1
+ -ip,--initpage <arg>   Página de inicio. Valor inicial del atributo de la
+                        url.
+ -t,--numThread <arg>   Número de hilos de ejecución. Cada hilo ejecuta un
+                        número de hilos de scraping.
+
+Process finished with exit code 0
+
+```
+
+#### Opciones
+
+| Opción         | Descripción                                                                                       |
+|----------------|---------------------------------------------------------------------------------------------------|
+| -ap,--atrpage  | Atributo de página de la url. p. e. page='pag' en https://foro.com/showthread.php?t=9077911&pag=1 |
+| -d,--directory | Directorio de salida                                                                              |
+| -eh,--endHilo  | Hilo del foro final. Valor final del atributo de la url. p.e. t=90.                               |
+| -ep,--endpage  | Página final. Valor final del atributo de la url.                                                 |
+| -f,--file      | Nombre del archivo de salida                                                                      |
+| -h,--help      | Mostrar ayuda                                                                                     |
+| -ih,--iniHilo  | Hilo del foro de inicio. Valor inicial del atributo de la url. p.e. t=1                           |
+| -ip,--initpage | Página de inicio. Valor inicial del atributo de la url.                                           |
+| -t,--numThread | Número de hilos de ejecución. Cada hilo ejecuta un número de hilos de scraping.                   |
+
 ## Dataset
 
 El dataset recopilado con el scraper y utilizado en este proyecto de investigación consta de 905,129 publicaciones de
@@ -33,7 +75,9 @@ Cada instancia tiene la siguiente estructura:
 ```
 
 Disponible en formato [JSON](https://mega.nz/file/SY5HkDIa#q8njIJ-5ptDLFbDLJ0YRwvVLZ3p5LigvGGxe2CD4ook)
-y [BSON](https://mega.nz/folder/mJxlXLjS#lcTOFd35EK5rnnYFIPxiXg) ([.bson](https://mega.nz/file/GdpHQQgA#jcI0JpkRntCF4RQAfEuk_XG_IeNUGQ4P_xp-7ZlTTrk), [metadata](https://mega.nz/file/7EY2DQiZ#8E3Q584E1tm-loaY5rrr_XWDeM5P0DhzEjTTLwyZYG8)).
+y [BSON](https://mega.nz/folder/mJxlXLjS#lcTOFd35EK5rnnYFIPxiXg)
+([.bson](https://mega.nz/file/GdpHQQgA#jcI0JpkRntCF4RQAfEuk_XG_IeNUGQ4P_xp-7ZlTTrk),
+[metadata](https://mega.nz/file/7EY2DQiZ#8E3Q584E1tm-loaY5rrr_XWDeM5P0DhzEjTTLwyZYG8)).
 
 # Investigación
 
