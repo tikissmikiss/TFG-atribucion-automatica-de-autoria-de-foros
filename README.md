@@ -1,8 +1,24 @@
 # TFG - Atribución Automática de Autoría de foros
 
+![Escudo](https://img.shields.io/badge/status-in%20Development-red) ![Escudo](https://img.shields.io/github/languages/count/tikissmikiss/TFG-atribucion-automatica-de-autoria-de-foros) ![Escudo](https://img.shields.io/github/languages/top/tikissmikiss/TFG-atribucion-automatica-de-autoria-de-foros) <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">![Escudo](https://img.shields.io/badge/license-in%20CC%20BY--NC--SA%204.0-yellow)</a>
+
 Este es el repositorio de código correspondiente al Trabajo de Fin de Grado de Ingeniería Informática.
 
-![Escudo](https://img.shields.io/badge/status-in%20Development-red) ![Escudo](https://img.shields.io/github/languages/count/tikissmikiss/TFG-atribucion-automatica-de-autoria-de-foros) ![Escudo](https://img.shields.io/github/languages/top/tikissmikiss/TFG-atribucion-automatica-de-autoria-de-foros) <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">![Escudo](https://img.shields.io/badge/license-in%20CC%20BY--NC--SA%204.0-yellow)</a>
+## Resumen Investigación
+
+En esta investigación se analiza la **atribución automática de autoría** de publicaciones de foros utilizando técnicas
+de **minería de texto**. Concretamente, se ha comparado entre el uso de técnicas de limpieza de texto genéricas y
+técnicas _ad-hoc_. Se utilizaron diferentes combinaciones de conjuntos de datos, que consistían en un corpus de 6000
+documentos escritos por 3 autores, con límites mínimos de palabras variables, que iban desde 0 hasta 35.
+
+Los resultados demuestran que las técnicas _ad-hoc_ superan a las genéricas, con una precisión media del 85% en
+comparación con el 69% de las técnicas genéricas. Los mejores resultados se obtuvieron al considerar un límite mínimo de
+palabras de 35, lo que supuso un promedio de 89.2 palabras por documento. El perceptrón multicapa y el regresor de Ridge
+lograron ambos una precisión del 98.7%. Estos hallazgos resaltan la importancia de considerar características
+lingüísticas específicas del autor y utilizar técnicas de limpieza de texto ad-hoc en tareas de atribución de autoría.
+
+
+[Ver datos de resultados](#resultado)
 
 ## Herramienta para la atribución automática de autoría
 
@@ -56,19 +72,6 @@ Disponible en formato [JSON](https://mega.nz/file/SY5HkDIa#q8njIJ-5ptDLFbDLJ0YRw
 y [BSON](https://mega.nz/folder/mJxlXLjS#lcTOFd35EK5rnnYFIPxiXg)
 ([.bson](https://mega.nz/file/GdpHQQgA#jcI0JpkRntCF4RQAfEuk_XG_IeNUGQ4P_xp-7ZlTTrk),
 [metadata](https://mega.nz/file/7EY2DQiZ#8E3Q584E1tm-loaY5rrr_XWDeM5P0DhzEjTTLwyZYG8)).
-
-# Investigación
-
-En esta investigación se analiza la **atribución automática de autoría** de publicaciones de foros utilizando técnicas
-de **minería de texto**. Concretamente, se ha comparado entre el uso de técnicas de limpieza de texto genéricas y
-técnicas _ad-hoc_. Se utilizaron diferentes combinaciones de conjuntos de datos, que consistían en un corpus de 6000
-documentos escritos por 3 autores, con límites mínimos de palabras variables, que iban desde 0 hasta 35.
-
-Los resultados demuestran que las técnicas _ad-hoc_ superan a las genéricas, con una precisión media del 85% en
-comparación con el 69% de las técnicas genéricas. Los mejores resultados se obtuvieron al considerar un límite mínimo de
-palabras de 35, lo que supuso un promedio de 89.2 palabras por documento. El perceptrón multicapa y el regresor de Ridge
-lograron ambos una precisión del 98.7%. Estos hallazgos resaltan la importancia de considerar características
-lingüísticas específicas del autor y utilizar técnicas de limpieza de texto ad-hoc en tareas de atribución de autoría.
 
 ## Resultado
 
