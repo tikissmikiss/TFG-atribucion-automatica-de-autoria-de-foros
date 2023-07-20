@@ -23,7 +23,8 @@ atribución de autoría.
 ## Herramienta para la atribución automática de autoría
 
 Dentro de la carpeta [attribution](./attribution) se encuentra el código fuente de la herramienta utilizada para llevar
-a cabo la investigación. En el siguiente enlace se puede ver el resultado de una ejecución con una muestra de 10,000
+a cabo la investigación. En el siguiente enlace se puede ver el [resultado](./Atribucion%20Autoria%20Foros.ipynb) de una
+ejecución con una muestra de 10,000
 publicaciones de 10 autores diferentes.
 
 [Ver notebook](./Atribucion%20Autoria%20Foros.ipynb)
