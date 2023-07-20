@@ -21,31 +21,10 @@ del dataset.
 
 Para ejecutar el scraper es necesario tener instalado Java 8 o superior y ejecutar el siguiente comando:
 
-```shell
-> java -jar web-scraper-0.1.0.jar --help
-
-Uso: java -jar web-scraper-0.1.0.jar [opciones]
-
- -ap,--atrpage <arg>    Atributo de página de la url. p. e. page='pag' en
-                        https://foro.com/showthread.php?t=9077911&pag=1
- -d,--directory <arg>   Directorio de salida
- -eh,--endHilo <arg>    Hilo del foro final. Valor final del atributo de
-                        la url. p.e. t=90.
- -ep,--endpage <arg>    Página final. Valor final del atributo de la url.
- -f,--file <arg>        Nombre del archivo de salida
- -h,--help              Mostrar ayuda
- -ih,--iniHilo <arg>    Hilo del foro de inicio. Valor inicial del
-                        atributo de la url. p.e. t=1
- -ip,--initpage <arg>   Página de inicio. Valor inicial del atributo de la
-                        url.
- -t,--numThread <arg>   Número de hilos de ejecución. Cada hilo ejecuta un
-                        número de hilos de scraping.
-
-Process finished with exit code 0
-
+```code
+> java -jar web-scraper-0.1.0.jar [opciones] 
 ```
 
-#### Opciones
 
 | Opción         | Descripción                                                                                       |
 |----------------|---------------------------------------------------------------------------------------------------|
