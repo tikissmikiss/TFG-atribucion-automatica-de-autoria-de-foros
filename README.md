@@ -6,17 +6,17 @@ Este es el repositorio de código correspondiente al Trabajo de Fin de Grado de 
 
 ## Resumen Investigación
 
-En esta investigación se analiza la **atribución automática de autoría** de publicaciones de foros utilizando técnicas
+En esta investigación se analiza la **atribución automática de autoría de publicaciones de foros** utilizando técnicas
 de **minería de texto**. Concretamente, se ha comparado entre el uso de técnicas de limpieza de texto genéricas y
 técnicas _ad-hoc_. Se utilizaron diferentes combinaciones de conjuntos de datos, que consistían en un corpus de 6000
-documentos escritos por 3 autores, con límites mínimos de palabras variables, que iban desde 0 hasta 35.
+documentos escritos por 3 autores, con límites mínimos de palabras variables, que iban desde 0 hasta 35 palabras.
 
 Los resultados demuestran que las técnicas _ad-hoc_ superan a las genéricas, con una precisión media del 85% en
 comparación con el 69% de las técnicas genéricas. Los mejores resultados se obtuvieron al considerar un límite mínimo de
-palabras de 35, lo que supuso un promedio de 89.2 palabras por documento. El perceptrón multicapa y el regresor de Ridge
-lograron ambos una precisión del 98.7%. Estos hallazgos resaltan la importancia de considerar características
-lingüísticas específicas del autor y utilizar técnicas de limpieza de texto ad-hoc en tareas de atribución de autoría.
-
+palabras de 35, lo que supuso un _dataset_ con un promedio de 89.2 palabras por documento. El perceptrón multicapa y el
+regresor de Ridge lograron ambos una precisión del 98.7%. Estos hallazgos resaltan la importancia de considerar
+características lingüísticas específicas del autor y utilizar técnicas de limpieza de texto ad-hoc en tareas de
+atribución de autoría.
 
 [Ver datos de resultados](#resultado)
 
