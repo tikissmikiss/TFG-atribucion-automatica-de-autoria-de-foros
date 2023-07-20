@@ -25,18 +25,17 @@ Para ejecutar el scraper es necesario tener instalado Java 8 o superior y ejecut
 > java -jar web-scraper-0.1.0.jar [opciones] 
 ```
 
-
-| Opción         | Descripción                                                                                       |
-|----------------|---------------------------------------------------------------------------------------------------|
-| -ap,--atrpage  | Atributo de página de la url. p. e. page='pag' en https://foro.com/showthread.php?t=9077911&pag=1 |
-| -d,--directory | Directorio de salida                                                                              |
-| -eh,--endHilo  | Hilo del foro final. Valor final del atributo de la url. p.e. t=90.                               |
-| -ep,--endpage  | Página final. Valor final del atributo de la url.                                                 |
-| -f,--file      | Nombre del archivo de salida                                                                      |
-| -h,--help      | Mostrar ayuda                                                                                     |
-| -ih,--iniHilo  | Hilo del foro de inicio. Valor inicial del atributo de la url. p.e. t=1                           |
-| -ip,--initpage | Página de inicio. Valor inicial del atributo de la url.                                           |
-| -t,--numThread | Número de hilos de ejecución. Cada hilo ejecuta un número de hilos de scraping.                   |
+| Opción | Nombre Argumento | Descripción                                                                                       |
+|--------|------------------|---------------------------------------------------------------------------------------------------|
+| -ap,   | --atrpage        | Atributo de página de la url. p. e. page='pag' en https://foro.com/showthread.php?t=9077911&pag=1 |
+| -d,    | --directory      | Directorio de salida                                                                              |
+| -eh,   | --endHilo        | Hilo del foro final. Valor final del atributo de la url. p.e. t=90.                               |
+| -ep,   | --endpage        | Página final. Valor final del atributo de la url.                                                 |
+| -f,    | --file           | Nombre del archivo de salida                                                                      |
+| -h,    | --help           | Mostrar ayuda                                                                                     |
+| -ih,   | --iniHilo        | Hilo del foro de inicio. Valor inicial del atributo de la url. p.e. t=1                           |
+| -ip,   | --initpage       | Página de inicio. Valor inicial del atributo de la url.                                           |
+| -t,    | --numThread      | Número de hilos de ejecución. Cada hilo ejecuta un número de hilos de scraping.                   |
 
 ## Dataset
 
